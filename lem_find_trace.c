@@ -40,38 +40,43 @@ void lem_find_trace(t_lem *lem)
     while(connect)
     {
       if (last_room->connnect->room == lem->end)
-      {
-
-      }
+				return (get_trace(trace_set, lem));
       if (check_in_trace(last_room, trace_set) &&
           check_in_steps(last_room, lem))
-      {
-        set_last->last->next = add_one_trace(trace_set, connect);
-        set_last->last = set_last->last->next;
-      }
-
+					add_one_trace(trace_set->trace, set_last, connect->room);
+			connect = connect->next;
     }
+		add_one_trace(trace_set->trace, set_last, last_room);
+		remove_top_trace(trace_set);
   }
 
-}
-
-
-void add_one_trace(t_trace_set *trace_set, t_trace *trace)
-{
-	if (!trace_set->trace)
-	{
-		trace_set->trace = trace;
-		trace_set->last = trace;
-		return ;
-	}
-	trace_set->last->next = trace;
-	trace_set->last = trace;
 }
 
 void remove_top_trace(t_trace_set *trace_set)
 {
 	t_trace_set *tmp;
 
-	tmp = trace_set->trace;
+	tmp = trace_set;
+	trace_set = trace_set->next;
+	free_one_trace_set(tmp);
+}
 
+void get_trace(t_trace_set *trace_set, t_lem *lem)
+{
+	t_trace *copy;
+	t_trace *tmp;
+
+	tmp = trace_set->trace;
+	lem->trace[lem->index] = new_trace(lem->start);
+	copy = lem->trace[lem->index];
+	tmp = tmp->next;
+	while (tmp)
+	{
+		copy->next = new_trace(tmp->room);
+		copy = copy->next;
+		tmp = tmp->next;
+	}
+	copy->next = new_trace(lem->end);
+	free_all_trace_set(trace_set);
+	add_step(lem);
 }

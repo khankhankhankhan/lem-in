@@ -1,54 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_free.c                                         :+:      :+:    :+:   */
+/*   lem_add_step.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/05 13:22:33 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 13:22:35 by hkang            ###   ########.fr       */
+/*   Created: 2018/02/09 14:48:00 by hkang             #+#    #+#             */
+/*   Updated: 2018/02/09 14:48:03 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "lem-in.h"
 
-void ft_free_doubulechar(char **src, int n)
+void add_step(t_lem *lem)
 {
-	int i;
-
-	i = 0;
-	while (i < n)
-	{
-		free(src[i]);
-		i++;
-	}
-	src = NULL;
-}
-
-void free_one_trace_set(t_trace_set *trace_set)
-{
-	t_trace *tmp;
+	t_trace *step;
 	t_trace *trace;
 
-	trace = trace_set->trace;
-	while (trace)
+	step = lem->step;
+	trace = lem->trace[lem->index];
+	while(trace)
 	{
-		tmp = trace;
+		if (step->room != lem->start)
+		{
+			append_trace(step->room);
+		}
 		trace = trace->next;
-		free (tmp);
-	}
-	free (trace_set->last);
-}
-
-void free_all_trace_set(t_trace_set *trace_set)
-{
-	t_trace_set *tmp;
-
-	while(trace_set)
-	{
-		tmp = trace_set;
-		trace_set = trace_set->next;
-		free_one_set(tmp);
 	}
 }
