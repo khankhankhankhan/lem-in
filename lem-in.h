@@ -44,7 +44,7 @@ typedef struct s_trace_set
 {
 	t_trace *trace;
 	struct s_trace_set *next;
-	struct s_trace_s et *last;
+	struct s_trace_set *last;
 } t_trace_set;
 
 typedef struct s_ant
@@ -56,7 +56,7 @@ typedef struct s_ant
 typedef struct s_lem
 {
 	int ant_num;
-	int step;
+	t_trace_set *step;
 	t_room *room;
 	t_room *last;
 	t_room *start;
