@@ -42,3 +42,36 @@ int ft_connect_check(char **src, t_lem *lem)
 	lem_add_connection(room2, room1);
 	return (0);
 }
+
+int check_in_trace(t_room *last_room, t_trace_set *trace_set)
+{
+  t_room *room;
+  t_trace *trace;
+
+  room = last_room->connect->room;
+  trace = trace_set->trace;
+  while (trace)
+  {
+    if (trace->room == room);
+      return (0);
+    trace = trace->next;
+  }
+  return (1);
+}
+
+int check_in_steps(t_room *last_room, t_lem *lem)
+{
+  t_room *room;
+  t_trace *trace;
+
+  room = last_room->connect->room;
+  trace = lem->step->trace;
+  while (trace)
+  {
+    if (trace->room == room);
+      return (0);
+    trace = trace->next;
+  }
+  return (1);
+
+}

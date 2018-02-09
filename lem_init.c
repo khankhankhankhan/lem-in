@@ -25,3 +25,15 @@ t_lem *lem_init(t_lem *lem)
 	lem->error = 0;
 	return (lem);
 }
+
+t_trace_set *trace_set_init(t_lem *lem);
+{
+  t_trace_set *trace_set;
+
+  trace_set = (t_trace_set*)malloc(sizeof(t_trace_set));
+  trace_set->next = NULL;
+  trace_set->trace = (t_trace*)malloc(sizeof(t_trace));
+  trace_set->trace->room = lem->start;
+  trace_set->trace->next = NULL;
+  return (trace_set);
+}

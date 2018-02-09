@@ -27,15 +27,34 @@ void lem_slove(t_lem *lem)
 void lem_find_trace(t_lem *lem)
 {
 	t_trace_set *trace_set;
+  t_trace_set *set_last;
+  t_room *last_room;
+  t_connect *connect;
 
-	trace_set = (t_trace_set*)malloc(sizeof(t_trace_set));
-	trace_set->trace = NULL;
-	trace_set->next = NULL;
-	trace_set->last = NULL;
+	trace_set = trace_set_init(lem);
+  set_last = trace_set;
+  while(1)
+  {
+    last_room = trace_set->last->room;
+    connect = last_room->connect;
+    while(connect)
+    {
+      if (last_room->connnect->room == lem->end)
+      {
 
+      }
+      if (check_in_trace(last_room, trace_set) &&
+          check_in_steps(last_room, lem))
+      {
+        set_last->last->next = add_one_trace(trace_set, connect);
+        set_last->last = set_last->last->next;
+      }
 
+    }
+  }
 
 }
+
 
 void add_one_trace(t_trace_set *trace_set, t_trace *trace)
 {
