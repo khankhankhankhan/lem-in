@@ -52,23 +52,24 @@ int check_in_trace(t_room *last_room, t_trace_set *trace_set)
   trace = trace_set->trace;
   while (trace)
   {
-    if (trace->room == room);
+    if (trace->room == room)
       return (0);
     trace = trace->next;
   }
   return (1);
 }
 
-int check_in_steps(t_room *last_room, t_lem *lem)
+int check_in_steps(t_room *last_room, t_trace_set *step)
 {
   t_room *room;
   t_trace *trace;
-
   room = last_room->connect->room;
-  trace = lem->step->trace;
+	if (step == NULL)
+		return (1);
+  trace = step->trace;
   while (trace)
   {
-    if (trace->room == room);
+    if (trace->room == room)
       return (0);
     trace = trace->next;
   }

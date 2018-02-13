@@ -21,8 +21,11 @@ LIB_PATH = ./print/
 LIB_NAME = libftprintf.a
 SRC_NAME = get_next_line.c\
 lem_add_data.c\
+lem_add_step.c\
+lem_add_trace.c\
 lem_check.c\
 lem_display.c\
+lem_find_trace.c\
 lem_free.c\
 lem_init.c\
 lem_read.c\

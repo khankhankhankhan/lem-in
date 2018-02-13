@@ -69,10 +69,13 @@ void lem_read(t_lem *lem)
 {
 	char *line;
 
-	while (get_next_line(0, &line) != 1)
+	get_next_line(0, &line);
 	lem->ant_num = ft_atoi(line);
+	ft_printf("ant_num is %d\n",lem->ant_num);
 	if (lem->ant_num <= 0)
 		lem->error = 0;
+
+	lem_trace_int(lem);
 	//ft_printf("%s\n", line);
 	while (get_next_line(0,&line) > 0 && !lem->error)
 	{

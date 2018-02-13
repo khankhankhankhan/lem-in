@@ -49,6 +49,6 @@ void free_all_trace_set(t_trace_set *trace_set)
 	{
 		tmp = trace_set;
 		trace_set = trace_set->next;
-		free_one_set(tmp);
+		free_one_trace_set(tmp);
 	}
 }

@@ -34,12 +34,12 @@ void lem_add_room(char **split, t_lem *lem)
 	lem->last = new;
 }
 
-t_connect *new_connect(char *src)
+t_connect *new_connect(t_room *room)
 {
 	t_connect *new;
 
 	new = (t_connect*)malloc(sizeof(t_connect));
-	new->name = ft_strdup(src);
+	new->room = room;
 	new->next = NULL;
 	return (new);
 }
@@ -48,7 +48,7 @@ void lem_add_connection(t_room *room1, t_room *room2)
 {
 	t_connect *new;
 
-	new = new_connect(room2->name);
+	new = new_connect(room2);
 	if (!room1->last_con)
 	{
 		room1->connect = new;
