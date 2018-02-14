@@ -73,6 +73,7 @@ void lem_step_display(t_lem *lem)
 		step = step->next;
 	}
 }
+
 void display_one_trace(t_trace *trace)
 {
 	t_trace *tmp;

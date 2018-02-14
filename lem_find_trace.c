@@ -28,15 +28,18 @@ void lem_slove(t_lem *lem)
 
 void lem_find_trace(t_lem *lem)
 {
+	//while (lem->index > 1);
 	t_trace_set *trace_set;
   t_trace_set *set_last;
 	t_trace_set *step;
+	t_trace *tmp;
   t_room *last_room;
   t_connect *connect;
 
 	trace_set = trace_set_init(lem);
   set_last = trace_set;
 	step = lem->step;
+	//ft_printf("\n");
 	//lem_step_display(lem);
 	int i;
 	i = 0;
@@ -48,9 +51,16 @@ void lem_find_trace(t_lem *lem)
     last_room = trace_set->last->room;
 		//printf("last_room is %s    ", last_room->name);
     connect = last_room->connect;
+		tmp = trace_set->trace;
 		step = lem->step;
-		if (step)
-			step = step->next;
+		while (tmp)
+		{
+			if (step)
+				step = step->next;
+			tmp = tmp->next;
+		}
+	//	ft_printf("trace_set is :----");
+	//	display_one_trace(trace_set->trace);
 		//printf("connect is %s\n", connect->room->name);
     while(connect)
     {
@@ -64,7 +74,7 @@ void lem_find_trace(t_lem *lem)
 			{
 				display_one_trace(trace_set->trace);
 				get_trace(trace_set, lem);
-				lem_step_display(lem);
+				//lem_step_display(lem);
 				return ;
 			}
 			int a;
@@ -73,17 +83,20 @@ void lem_find_trace(t_lem *lem)
 			a = -1;
 			b = -1;
 			a = check_in_trace(connect->room, trace_set);
-	//		ft_printf("a = %d, ", a);
+			ft_printf("a = %d, ", a);
+
+
 			b = check_in_steps(connect->room, step);
 		/*	if (i < 2)
-			{
-					ft_printf("b = %d, i = %d, index = %d, connect->roomt is %s\n", b, i, lem->index,connect->room->name);
+			{*/
+					ft_printf("b = %d, i = %d, index = %d, connect->roomt is %s\n",
+					b, i, lem->index,connect->room->name);
 					if (step)
 						display_one_trace(step->trace);
-					lem_step_display(lem);
-				}*/
+					//lem_step_display(lem);
+				//}*/
       //if (check_in_trace(last_room, trace_set) && check_in_steps(last_room, step))
-			if (a && b)
+			if (a == 1 && b == 1)
 			{
 				set_last->next = copy_trace(trace_set->trace, connect->room);
 				set_last = set_last->next;
