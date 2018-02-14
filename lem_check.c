@@ -48,7 +48,7 @@ int check_in_trace(t_room *last_room, t_trace_set *trace_set)
   t_room *room;
   t_trace *trace;
 
-  room = last_room->connect->room;
+  room = last_room;
   trace = trace_set->trace;
   while (trace)
   {
@@ -63,7 +63,7 @@ int check_in_steps(t_room *last_room, t_trace_set *step)
 {
   t_room *room;
   t_trace *trace;
-  room = last_room->connect->room;
+  room = last_room;
 	if (step == NULL)
 		return (1);
   trace = step->trace;

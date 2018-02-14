@@ -43,7 +43,7 @@ typedef struct s_trace
 typedef struct s_trace_set
 {
 	t_trace *trace;
-	struct s_trace_set *last;
+	t_trace *last;
 	struct s_trace_set *next;
 } t_trace_set;
 
@@ -88,12 +88,14 @@ void lem_display_room(t_room *room);
 void lem_display(t_lem *lem);
 void lem_trace_display(t_lem *lem);
 void display_one_trace(t_trace *trace);
+void lem_final_display(t_lem *lem);
+void lem_step_display(t_lem *lem);
 
 void lem_slove(t_lem *lem);
 void lem_find_trace(t_lem *lem);
-void remove_top_trace(t_trace_set *trace_set);
+t_trace_set *remove_top_trace(t_trace_set *trace_set);
 void get_trace(t_trace_set *trace_set, t_lem *lem);
-t_room *get_last_room(t_trace *trace);
+t_trace *get_last_trace(t_trace *trace);
 
 void ft_free_doubulechar(char **src, int n);
 void free_one_trace_set(t_trace_set *trace_set);

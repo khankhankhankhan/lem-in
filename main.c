@@ -19,10 +19,11 @@ int main(void)
 	lem = NULL;
 	lem = lem_init(lem);
 	lem_read(lem);
-	//lem_display(lem);
+	lem_display(lem);
 	ft_printf("ant_num is %d\n",lem->ant_num);
 	lem_slove(lem);
 	ft_printf("ant_num is %d\n",lem->ant_num);
 	lem_trace_display(lem);
+	lem_final_display(lem);
 	return (0);
 }

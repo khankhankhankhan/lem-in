@@ -37,7 +37,7 @@ t_trace_set *trace_set_init(t_lem *lem)
   trace_set->trace = (t_trace*)malloc(sizeof(t_trace));
   trace_set->trace->room = lem->start;
   trace_set->trace->next = NULL;
-	trace_set->last = trace_set;
+	trace_set->last = trace_set->trace;
   return (trace_set);
 }
 
@@ -58,6 +58,6 @@ void lem_step_init(t_lem *lem)
 {
 	lem->step = (t_trace_set*)malloc(sizeof(t_trace_set));
 	lem->step->trace = new_trace(lem->start);
-	lem->step->last = lem->step;
+	lem->step->last = lem->step->trace;
 	lem->step->next = NULL;
 }
