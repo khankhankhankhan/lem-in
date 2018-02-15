@@ -21,7 +21,16 @@ int main(void)
 	lem_read(lem);
 	lem_display(lem);
 	ft_printf("ant_num is %d\n",lem->ant_num);
-	lem_slove(lem);
+	int i;
+
+	lem_step_init(lem);
+	i = 0;
+	while (i < lem->ant_num)
+	{
+		lem_find_trace(lem);
+		lem->index++;
+		i++;
+	}
 	ft_printf("ant_num is %d\n",lem->ant_num);
 	lem_trace_display(lem);
 	lem_final_display(lem);

@@ -6,20 +6,28 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:49:16 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 14:49:18 by hkang            ###   ########.fr       */
+/*   Updated: 2018/02/14 14:58:01 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-int ft_room_check(char **src)
+/*
+** check if the room is legal
+*/
+
+int		ft_room_check(char **src)
 {
 	if (src[1] && src[2] && !src[3])
 		return (0);
 	return (1);
 }
 
-int ft_connect_check(char **src, t_lem *lem)
+/*
+** check if the connect is legal
+*/
+
+int		ft_connect_check(char **src, t_lem *lem)
 {
 	t_room *room;
 	t_room *room1;
@@ -28,7 +36,7 @@ int ft_connect_check(char **src, t_lem *lem)
 	room = lem->room;
 	room1 = NULL;
 	room2 = NULL;
-	while(room && (!room1 || !room2))
+	while (room && (!room1 || !room2))
 	{
 		if (!ft_strcmp(room->name, src[0]))
 			room1 = room;
@@ -43,36 +51,40 @@ int ft_connect_check(char **src, t_lem *lem)
 	return (0);
 }
 
-int check_in_trace(t_room *last_room, t_trace_set *trace_set)
-{
-  t_room *room;
-  t_trace *trace;
+/*
+** check if the last_room is in the trace_set's trace
+*/
 
-  room = last_room;
-  trace = trace_set->trace;
-  while (trace)
-  {
-    if (trace->room == room)
-      return (0);
-    trace = trace->next;
-  }
-  return (1);
+int		check_in_trace(t_room *last_room, t_trace_set *trace_set)
+{
+	t_trace	*trace;
+
+	trace = trace_set->trace;
+	while (trace)
+	{
+		if (trace->room == last_room)
+			return (0);
+		trace = trace->next;
+	}
+	return (1);
 }
 
-int check_in_steps(t_room *last_room, t_trace_set *step)
+/*
+** check if the last_room is in the step's trace
+*/
+
+int		check_in_steps(t_room *last_room, t_trace_set *step)
 {
-  t_room *room;
-  t_trace *trace;
-  room = last_room;
+	t_trace	*trace;
+
 	if (step == NULL)
 		return (1);
-  trace = step->trace;
-  while (trace)
-  {
-    if (trace->room == room)
-      return (0);
-    trace = trace->next;
-  }
-  return (1);
-
+	trace = step->trace;
+	while (trace)
+	{
+		if (trace->room == last_room)
+			return (0);
+		trace = trace->next;
+	}
+	return (1);
 }

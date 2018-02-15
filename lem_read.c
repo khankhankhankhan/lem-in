@@ -14,45 +14,21 @@
 
 void get_data_in(char *line, t_lem *lem)
 {
-	char *temp;
 	char **split;
+	char *temp;
 
-	if (ft_strcmp("##start", line) == 0)
+	if (ft_strcmp("##start", line) == 0 || ft_strcmp("##end", line) == 0)
 	{
 		if (get_next_line(0, &temp) <= 0)
 		{
 				lem->error = 1;
 				return ;
 		}
-		ft_printf("%s\n", temp);
-		split = ft_strsplit(temp, ' ');
-		lem->error = ft_room_check(split);
-		if (lem->error)
-			return ;
-		lem_add_room(split, lem);
-		lem->last->isstart = 1;
-		lem->start = lem->last;
-	}
-	else if (ft_strcmp("##end", line) == 0)
-	{
-		if (get_next_line(0, &temp) <= 0)
-		{
-				lem->error = 1;
-				return ;
-		}
-		ft_printf("%s\n", temp);
-		split = ft_strsplit(temp, ' ');
-		lem->error = ft_room_check(split);
-		if (lem->error)
-			return ;
-		lem_add_room(split, lem);
-		lem->last->isend = 1;
-		lem->end = lem->last;
+		get_start_end_room(line, temp, lem);
 	}
 	else if (ft_strchr(line, ' '))
 	{
 		split = ft_strsplit(line, ' ');
-		//ft_printf("%s, %s, %s\n", split[0],split[1],split[2]);
 		lem->error = ft_room_check(split);
 		if (lem->error)
 			return ;
@@ -65,22 +41,40 @@ void get_data_in(char *line, t_lem *lem)
 	}
 }
 
+void get_start_end_room(char *line, char *temp, t_lem *lem)
+{
+	char **split;
+	
+	split = ft_strsplit(temp, ' ');
+	lem->error = ft_room_check(split);
+	if (lem->error)
+		return ;
+	lem_add_room(split, lem);
+	if (ft_strcmp("##start", line) == 0)
+	{
+		lem->last->isstart = 1;
+		lem->start = lem->last;
+	}
+	else if (ft_strcmp("##end", line) == 0)
+	{
+		lem->last->isend = 1;
+		lem->end = lem->last;
+	}
+}
+
 void lem_read(t_lem *lem)
 {
 	char *line;
 
 	get_next_line(0, &line);
 	lem->ant_num = ft_atoi(line);
-	ft_printf("ant_num is %d\n",lem->ant_num);
 	if (lem->ant_num <= 0)
 		lem->error = 0;
 
 	lem_trace_int(lem);
-	//ft_printf("%s\n", line);
 	while (get_next_line(0,&line) > 0 && !lem->error)
 	{
 		ft_printf("%s\n", line);
 		get_data_in(line, lem);
-		//ft_printf("error = %d\n", lem->error);
 	}
 }

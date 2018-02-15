@@ -6,131 +6,54 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 11:01:13 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/08 11:01:17 by hkang            ###   ########.fr       */
+/*   Updated: 2018/02/15 15:08:00 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void lem_slove(t_lem *lem)
-{
-	int i;
+/*
+** creat a trace_set and the last_set of this set;
+** find the trace and add this trace to lem->trace[index]
+*/
 
-	lem_step_init(lem);
-	i = 0;
-	while (i < lem->ant_num)
-	{
-		lem_find_trace(lem);
-		lem->index++;
-		i++;
-	}
-}
-
-void lem_find_trace(t_lem *lem)
+void		lem_find_trace(t_lem *lem)
 {
-	//while (lem->index > 1);
 	t_trace_set *trace_set;
-  t_trace_set *set_last;
-	t_trace_set *step;
-	t_trace *tmp;
-  t_room *last_room;
-  t_connect *connect;
+	t_trace_set *set_last;
 
 	trace_set = trace_set_init(lem);
-  set_last = trace_set;
-	step = lem->step;
-	//ft_printf("\n");
-	//lem_step_display(lem);
-	int i;
-	i = 0;
-	//printf("lem_find_trace\n");
-  while(1)
-  {
-		i++;
-	//	printf("while lem_find_trace\n");
-    last_room = trace_set->last->room;
-		//printf("last_room is %s    ", last_room->name);
-    connect = last_room->connect;
-		tmp = trace_set->trace;
-		step = lem->step;
-		while (tmp)
-		{
-			if (step)
-				step = step->next;
-			tmp = tmp->next;
-		}
-	//	ft_printf("trace_set is :----");
-	//	display_one_trace(trace_set->trace);
-		//printf("connect is %s\n", connect->room->name);
-    while(connect)
-    {
-	//		if (step)
-	//			printf("step is %s\n", step->trace->room->name);
-
-		//	lem_step_display(lem);
-		//	printf("step is %s\n", step->trace->room->name);
-	//		printf("last_room->connect->room is %s\n", last_room->connect->room->name);
-			if (connect->room == lem->end)
-			{
-				display_one_trace(trace_set->trace);
-				get_trace(trace_set, lem);
-				//lem_step_display(lem);
-				return ;
-			}
-			int a;
-			int b;
-
-			a = -1;
-			b = -1;
-			a = check_in_trace(connect->room, trace_set);
-			ft_printf("a = %d, ", a);
-
-
-			b = check_in_steps(connect->room, step);
-		/*	if (i < 2)
-			{*/
-					ft_printf("b = %d, i = %d, index = %d, connect->roomt is %s\n",
-					b, i, lem->index,connect->room->name);
-					if (step)
-						display_one_trace(step->trace);
-					//lem_step_display(lem);
-				//}*/
-      //if (check_in_trace(last_room, trace_set) && check_in_steps(last_room, step))
-			if (a == 1 && b == 1)
-			{
-				set_last->next = copy_trace(trace_set->trace, connect->room);
-				set_last = set_last->next;
-					//add_one_trace(trace_set->trace, set_last, connect->room);
-					//display_one_trace(set_last->trace);
-			}
-			connect = connect->next;
-		//	while(lem->index > 1);
-	//		ft_printf("i\n");
-    }
-		set_last->next = copy_trace(trace_set->trace, last_room);
-		set_last = set_last->next;
-		//display_one_trace(set_last->trace);
-		t_trace_set *tmp;
-		tmp = trace_set;
-		trace_set = trace_set->next;
-		free_one_trace_set(tmp);
-		//add_one_trace(trace_set->trace, set_last, last_room);
-		//trace_set = remove_top_trace(trace_set);
-  }
-
+	set_last = trace_set;
+	add_one_trace(trace_set, set_last, lem);
+	free_all_trace_set(trace_set);
 }
 
-t_trace_set *remove_top_trace(t_trace_set *trace_set)
+/*
+** search to the trace until the end ot it
+** make sure the step is the same node of trace
+*/
+
+t_trace_set	*get_step(t_lem *lem, t_trace *trace)
 {
-	t_trace_set *tmp;
+	t_trace		*tmp;
+	t_trace_set	*step;
 
-	tmp = trace_set;
-	trace_set = trace_set->next;
-	free_one_trace_set(tmp);
-	return (trace_set);
+	tmp = trace;
+	step = lem->step;
+	while (tmp)
+	{
+		if (step)
+			step = step->next;
+		tmp = tmp->next;
+	}
+	return (step);
 }
 
-t_trace *get_last_trace(t_trace *trace)
+/*
+** got the last of one trace
+*/
+
+t_trace		*get_last_trace(t_trace *trace)
 {
 	t_trace *tmp;
 
@@ -140,7 +63,12 @@ t_trace *get_last_trace(t_trace *trace)
 	return (tmp);
 }
 
-void get_trace(t_trace_set *trace_set, t_lem *lem)
+/*
+** add the trace to the lem[lem-index]
+** add the each trace-step to the lem->step
+*/
+
+void		get_trace(t_trace_set *trace_set, t_lem *lem)
 {
 	t_trace *copy;
 	t_trace *tmp;
@@ -156,6 +84,5 @@ void get_trace(t_trace_set *trace_set, t_lem *lem)
 		tmp = tmp->next;
 	}
 	copy->next = new_trace(lem->end);
-	free_all_trace_set(trace_set);
 	add_step(lem);
 }

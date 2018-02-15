@@ -6,15 +6,22 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:50:22 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 14:50:24 by hkang            ###   ########.fr       */
+/*   Updated: 2018/02/14 14:25:46 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-void lem_add_room(char **split, t_lem *lem)
+/*
+**	creat a room
+**	copy split[0] to room->name
+**	init this room that include start, end, connect and last_connect
+**	add the room to the lem
+*/
+
+void		lem_add_room(char **split, t_lem *lem)
 {
-	t_room *new;
+	t_room		*new;
 
 	new = (t_room*)malloc(sizeof(t_room));
 	new->name = ft_strdup(split[0]);
@@ -34,9 +41,9 @@ void lem_add_room(char **split, t_lem *lem)
 	lem->last = new;
 }
 
-t_connect *new_connect(t_room *room)
+t_connect	*new_connect(t_room *room)
 {
-	t_connect *new;
+	t_connect	*new;
 
 	new = (t_connect*)malloc(sizeof(t_connect));
 	new->room = room;
@@ -44,9 +51,14 @@ t_connect *new_connect(t_room *room)
 	return (new);
 }
 
-void lem_add_connection(t_room *room1, t_room *room2)
+/*
+**creat a new connect node with room2
+**add the new connect node in the last of the room1's connect
+*/
+
+void		lem_add_connection(t_room *room1, t_room *room2)
 {
-	t_connect *new;
+	t_connect	*new;
 
 	new = new_connect(room2);
 	if (!room1->last_con)

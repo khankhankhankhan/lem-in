@@ -74,8 +74,8 @@ void lem_add_connection(t_room *room1, t_room *room2);
 void add_step(t_lem *lem);
 void append_step(t_trace *trace, t_room *room);
 
-void add_one_trace(t_trace *trace, t_trace_set *set_last, t_room *room);
-t_trace_set *copy_trace(t_trace *trace, t_room *room);
+void add_one_trace(t_trace_set *trace_set, t_trace_set *set_last, t_lem *lem);
+t_trace_set *copy_trace(t_trace_set	*set_last, t_trace *trace, t_room *room);
 t_trace_set *new_trace_set(t_trace *trace);
 t_trace *new_trace(t_room *room);
 
@@ -91,11 +91,11 @@ void display_one_trace(t_trace *trace);
 void lem_final_display(t_lem *lem);
 void lem_step_display(t_lem *lem);
 
-void lem_slove(t_lem *lem);
+//void lem_slove(t_lem *lem);
 void lem_find_trace(t_lem *lem);
-t_trace_set *remove_top_trace(t_trace_set *trace_set);
 void get_trace(t_trace_set *trace_set, t_lem *lem);
 t_trace *get_last_trace(t_trace *trace);
+t_trace_set *get_step(t_lem *lem, t_trace *trace);
 
 void ft_free_doubulechar(char **src, int n);
 void free_one_trace_set(t_trace_set *trace_set);
@@ -108,4 +108,5 @@ void lem_step_init(t_lem *lem);
 
 void get_data_in(char *line, t_lem *lem);
 void lem_read(t_lem *lem);
+void get_start_end_room(char *line, char *temp, t_lem *lem);
 #endif

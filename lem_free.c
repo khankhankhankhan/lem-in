@@ -38,7 +38,6 @@ void free_one_trace_set(t_trace_set *trace_set)
 		trace = trace->next;
 		free (tmp);
 	}
-	//free (trace_set->last);
 }
 
 void free_all_trace_set(t_trace_set *trace_set)
