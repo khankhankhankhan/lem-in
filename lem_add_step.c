@@ -6,11 +6,44 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:48:00 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/14 14:27:12 by hkang            ###   ########.fr       */
+/*   Updated: 2018/02/27 15:48:00 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
+
+/*
+** check this start and end room's connection is full,
+** if its full, return 0;
+*/
+
+int		check_step_full(t_trace_set *step, t_room *room)
+{
+	t_trace		*trace;
+	t_connect	*connect;
+	int			flag;
+
+	connect = room->connect;
+	while (connect)
+	{
+		trace = step->trace;
+		flag = 0;
+		while (trace)
+		{
+			if (trace->room == connect->room)
+			{
+				flag = 1;
+				trace = NULL;
+			}
+			else
+				trace = trace->next;
+		}
+		if (flag == 0)
+			return (0);
+		connect = connect->next;
+	}
+	return (1);
+}
 
 /*
 **  add the trace[index] to the step
@@ -40,6 +73,9 @@ void	add_step(t_lem *lem)
 			append_step(step->trace, trace->room);
 		trace = trace->next;
 	}
+	if (check_step_full(step, lem->end) ||
+			check_step_full(lem->step_start, lem->start))
+		lem->step_start = lem->step_start->next;
 }
 
 /*

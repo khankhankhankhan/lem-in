@@ -12,6 +12,42 @@
 
 #include "lem-in.h"
 
+/*
+** display the file format
+*/
+
+int lem_display_format(void)
+{
+	ft_printf("ERROR\n");
+	ft_printf("check your format like this:\n");
+	ft_printf("number_of_ants : integer number more than 0\n");
+	ft_printf("the_rooms : name coord_x coord_y\n");
+	ft_printf("connect : name1-name2\n");
+	ft_printf("broken by comments, which start with #\n");
+	return (0);
+}
+
+/*
+** display the useage
+*/
+
+int lem_display_useage(void)
+{
+	ft_printf("ERROR\n");
+	ft_printf("useage: ./lem-in < source_file\n");
+	return (0);
+}
+
+/*
+** display error
+*/
+
+int lem_display_error(void)
+{
+	ft_printf("ERROR\n");
+	return (0);
+}
+
 void lem_display_room(t_room *room)
 {
 	t_connect *tmp_connect;
@@ -25,24 +61,6 @@ void lem_display_room(t_room *room)
 		tmp_connect = tmp_connect->next;
 	}
 	ft_printf("\nlast_con is:%s\n\n", room->last_con->room->name);
-}
-
-void lem_display(t_lem *lem)
-{
-	t_room *tmp_room;
-
-	tmp_room = lem->room;
-	while (tmp_room)
-	{
-		lem_display_room(tmp_room);
-		tmp_room = tmp_room->next;
-	}
-	ft_printf("last ");
-	lem_display_room(lem->last);
-	ft_printf("start ");
-	lem_display_room(lem->start);
-	ft_printf("end ");
-	lem_display_room(lem->end);
 }
 
 void lem_trace_display(t_lem *lem)
@@ -90,10 +108,9 @@ void lem_final_display(t_lem *lem)
 {
 	int i;
 	int flag;
-
-	i = 0;
-	flag = 1;
 	t_trace **trace;
+
+	flag = 1;
 	trace = lem->trace;
 	while (flag)
 	{
@@ -103,9 +120,13 @@ void lem_final_display(t_lem *lem)
 		{
 			if (trace[i]->next)
 			{
-				flag = 1;
 				if (trace[i]->room != trace[i]->next->room)
-					ft_printf("L%d->%s,", i + 1, trace[i]->next->room->name);
+				{
+					if (flag == 1)
+						ft_printf(" ");
+					ft_printf("L%d->%s", i + 1, trace[i]->next->room->name);
+					flag = 1;
+				}
 				trace[i]= trace[i]->next;
 			}
 			i++;

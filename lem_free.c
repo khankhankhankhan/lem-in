@@ -43,11 +43,14 @@ void free_one_trace_set(t_trace_set *trace_set)
 void free_all_trace_set(t_trace_set *trace_set)
 {
 	t_trace_set *tmp;
-
+	int i;
+	i = 0;
 	while(trace_set)
 	{
 		tmp = trace_set;
 		trace_set = trace_set->next;
 		free_one_trace_set(tmp);
+		i++;
 	}
+	ft_printf("free_all_trace_set i is %d\n", i);
 }

@@ -25,12 +25,36 @@ t_lem		*lem_init(t_lem *lem)
 	lem->index = 0;
 	lem->error = 0;
 	lem->step = NULL;
+	lem->step_start = NULL;
+	lem->trace_set = NULL;
+	lem->set_last = NULL;
+	lem->file = ft_strnew(1);
 	return (lem);
 }
 
-t_trace_set	*trace_set_init(t_lem *lem)
+t_trace_set	*step_init(t_lem *lem)
+{
+	t_trace_set	*step;
+	t_trace *trace;
+	//ft_printf("add on step_init1 \n");
+	trace = lem->trace[lem->index - 1];
+	//ft_printf("add on step_init2 \n");
+	step = lem->step;
+	while (trace->next->room == lem->start)
+	{
+		//ft_printf("add on step_init3 \n");
+		//step = step->next;
+		trace = trace->next;
+		if (trace->next && trace->next->room == lem->start)
+			step = step->next;
+	}
+	return (step);
+}
+
+void	trace_set_init(t_lem *lem)
 {
 	t_trace_set *trace_set;
+	//t_trace *tmp;
 
 	trace_set = (t_trace_set*)malloc(sizeof(t_trace_set));
 	trace_set->next = NULL;
@@ -38,7 +62,21 @@ t_trace_set	*trace_set_init(t_lem *lem)
 	trace_set->trace->room = lem->start;
 	trace_set->trace->next = NULL;
 	trace_set->last = trace_set->trace;
-	return (trace_set);
+	lem->trace_set = trace_set;
+	lem->set_last = trace_set;
+	/*if (lem->index > 0)
+	{
+		tmp = lem->trace[lem->index - 1]->next;
+		while (tmp->room == lem->start)
+		{
+			trace_set->last->next = (t_trace*)malloc(sizeof(t_trace));
+			trace_set->last->next->room = lem->start;
+			trace_set->last = trace_set->last->next;
+			trace_set->last->next = NULL;
+			tmp = tmp->next;
+		}
+	}*/
+	//return (trace_set);
 }
 
 void		lem_trace_int(t_lem *lem)
@@ -60,4 +98,5 @@ void		lem_step_init(t_lem *lem)
 	lem->step->trace = new_trace(lem->start);
 	lem->step->last = lem->step->trace;
 	lem->step->next = NULL;
+	lem->step_start = lem->step;
 }

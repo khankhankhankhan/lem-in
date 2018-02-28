@@ -41,6 +41,10 @@ void		lem_add_room(char **split, t_lem *lem)
 	lem->last = new;
 }
 
+/*
+** creat a new cnnection point, set the new->room is room
+*/
+
 t_connect	*new_connect(t_room *room)
 {
 	t_connect	*new;

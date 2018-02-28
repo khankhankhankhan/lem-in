@@ -6,7 +6,7 @@
 /*   By: huakang <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/08 19:06:34 by huakang           #+#    #+#             */
-/*   Updated: 2018/02/15 14:31:25 by hkang            ###   ########.fr       */
+/*   Updated: 2018/02/27 15:32:29 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@
 void		add_one_trace(t_trace_set *trace_set,
 		t_trace_set *set_last, t_lem *lem)
 {
-	t_trace_set	*step;
+	t_trace_set	*t_step;
 	t_connect	*connect;
 	t_room		*last_room;
 
-	while (1)
+	while (!lem->error)
 	{
 		last_room = trace_set->last->room;
 		connect = last_room->connect;
-		step = get_step(lem, trace_set->trace);
+		t_step = get_step(lem->step_start, trace_set->trace);
+		set_last = copy_trace(set_last, trace_set->trace, last_room);
 		while (connect)
 		{
 			if (connect->room == lem->end)
@@ -37,13 +38,12 @@ void		add_one_trace(t_trace_set *trace_set,
 				get_trace(trace_set, lem);
 				return ;
 			}
-			else if (check_in_steps(connect->room, step) &&
+			else if (check_in_steps(connect->room, t_step) &&
 				check_in_trace(connect->room, trace_set))
 				set_last = copy_trace(set_last,
 						trace_set->trace, connect->room);
 			connect = connect->next;
 		}
-		set_last = copy_trace(set_last, trace_set->trace, last_room);
 		trace_set = trace_set->next;
 	}
 }
