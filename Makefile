@@ -26,6 +26,7 @@ lem_add_trace.c\
 lem_check.c\
 lem_display.c\
 lem_find_trace.c\
+lem_get_number.c\
 lem_free.c\
 lem_init.c\
 lem_read.c\

@@ -19,11 +19,7 @@
 
 void		lem_find_trace(t_lem *lem)
 {
-	//t_trace_set *trace_set;
-	//t_trace_set *set_last;
-
 	trace_set_init(lem);
-	//set_last = trace_set;
 	add_one_trace(lem->trace_set, lem->set_last, lem);
 	free_all_trace_set(lem->trace_set);
 }
@@ -33,28 +29,19 @@ void		lem_find_trace(t_lem *lem)
 ** make sure the step is the same node of trace
 */
 
-t_trace_set	*get_step(t_trace_set	*step, t_trace *trace)
+t_trace_set	*get_step(t_trace_set *step, t_trace *trace)
 {
 	t_trace		*tmp;
 	t_trace_set	*t_step;
-	int i;
-	int j;
 
-	i = 0;
-	j = 0;
 	tmp = trace;
 	t_step = step;
 	while (tmp)
 	{
-		j++;
 		if (t_step)
-		{
-				t_step = t_step->next;
-				i++;
-		}
+			t_step = t_step->next;
 		tmp = tmp->next;
 	}
-	//printf ("step is %d, step trace is %d\n", i, j);
 	return (t_step);
 }
 
@@ -79,12 +66,13 @@ t_trace		*get_last_trace(t_trace *trace)
 
 void		get_trace(t_trace_set *trace_set, t_lem *lem)
 {
-	t_trace *copy;
-	t_trace *tmp;
-	t_trace_set *step;
+	t_trace		*copy;
+	t_trace		*tmp;
+	t_trace_set	*step;
 
 
 	lem->trace[lem->index] = new_trace(lem->start);
+//	while (1);
 	copy = lem->trace[lem->index];
 	step = lem->step;
 	if (lem->index > 0)
@@ -96,18 +84,14 @@ void		get_trace(t_trace_set *trace_set, t_lem *lem)
 			copy = copy->next;
 		}
 	}
-	int i;
-	i = 0;
-	tmp = trace_set->trace;
-	tmp = tmp->next;
+	tmp = trace_set->trace->next;
 	while (tmp)
 	{
 		copy->next = new_trace(tmp->room);
 		copy = copy->next;
 		tmp = tmp->next;
-		i++;
 	}
-	//ft_printf("get_trace length is %d    --------",i);
 	add_step(lem);
 	copy->next = new_trace(lem->end);
+
 }

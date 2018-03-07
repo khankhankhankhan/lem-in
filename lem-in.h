@@ -47,12 +47,6 @@ typedef struct s_trace_set
 	struct s_trace_set *next;
 } t_trace_set;
 
-typedef struct s_ant
-{
-	char **rout;
-
-} t_ant;
-
 typedef struct s_lem
 {
 	int ant_num;
@@ -65,7 +59,6 @@ typedef struct s_lem
 	t_room *last;
 	t_room *start;
 	t_room *end;
-	t_ant **ant;
 	char *file;
 	int index;
 	int error;
@@ -93,12 +86,8 @@ int check_step_full(t_trace_set *step, t_room *room);
 int  lem_display_useage(void);
 int lem_display_format(void);
 int lem_display_error(void);
-void lem_display_room(t_room *room);
-void lem_display(t_lem *lem);
-void lem_trace_display(t_lem *lem);
-void display_one_trace(t_trace *trace);
+void	lem_display_room(t_trace **trace, int i, int *flag);
 void lem_final_display(t_lem *lem);
-void lem_step_display(t_lem *lem);
 
 //void lem_slove(t_lem *lem);
 void lem_find_trace(t_lem *lem);
@@ -106,9 +95,11 @@ void	get_trace(t_trace_set *trace_set, t_lem *lem);
 t_trace *get_last_trace(t_trace *trace);
 t_trace_set *get_step(t_trace_set	*step, t_trace *trace);
 
+void lem_free_all(t_lem *lem);
 void ft_free_doubulechar(char **src, int n);
 void free_one_trace_set(t_trace_set *trace_set);
 void free_all_trace_set(t_trace_set *trace_set);
+void free_room(t_lem *lem);
 
 t_lem *lem_init(t_lem *lem);
 void trace_set_init(t_lem *lem);
@@ -118,7 +109,7 @@ t_trace_set	*step_init(t_lem *lem);
 
 //void get_data_in(char *line, t_lem *lem);
 void lem_get_room(char **line, t_lem *lem);
-void lem_get_link(char *line, t_lem *lem);
+void	lem_get_link(char **line, t_lem *lem);
 int  ft_count_char(char *src, char c);
 void lem_read(t_lem *lem);
 void get_start_end_room(char *line, char *temp, t_lem *lem);

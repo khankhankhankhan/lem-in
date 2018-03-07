@@ -16,7 +16,7 @@
 ** display the file format
 */
 
-int lem_display_format(void)
+int		lem_display_format(void)
 {
 	ft_printf("ERROR\n");
 	ft_printf("check your format like this:\n");
@@ -31,7 +31,7 @@ int lem_display_format(void)
 ** display the useage
 */
 
-int lem_display_useage(void)
+int		lem_display_useage(void)
 {
 	ft_printf("ERROR\n");
 	ft_printf("useage: ./lem-in < source_file\n");
@@ -42,76 +42,37 @@ int lem_display_useage(void)
 ** display error
 */
 
-int lem_display_error(void)
+int		lem_display_error(void)
 {
 	ft_printf("ERROR\n");
 	return (0);
 }
 
-void lem_display_room(t_room *room)
+void	lem_display_room(t_trace **trace, int i, int *flag)
 {
-	t_connect *tmp_connect;
+	t_trace *temp;
 
-	tmp_connect = room->connect;
-	ft_printf("room name is:%s; start:%d; end:%d;\n", room->name, room->isstart, room->isend);
-	ft_printf("connect to:");
-	while(tmp_connect)
+	temp = trace[i];
+	if (temp->room != temp->next->room)
 	{
-		ft_printf("%s,",tmp_connect->room->name);
-		tmp_connect = tmp_connect->next;
+		if (*flag == 1)
+			ft_printf(" ");
+		ft_printf("L%d->%s", i + 1, temp->next->room->name);
+		*flag = 1;
 	}
-	ft_printf("\nlast_con is:%s\n\n", room->last_con->room->name);
+	trace[i] = trace[i]->next;
+	free(temp);
 }
 
-void lem_trace_display(t_lem *lem)
+void	lem_final_display(t_lem *lem)
 {
-	int i;
-
-	i = 0;
-	while(i < lem->ant_num)
-	{
-		ft_printf("num is:%d-----:", i);
-		display_one_trace(lem->trace[i]);
-		i++;
-	}
-}
-
-void lem_step_display(t_lem *lem)
-{
-	t_trace_set *step;
-	int i;
-
-	i = 0;
-	step = lem->step;
-	while(step)
-	{
-		ft_printf("step is:%d-----:", i);
-		display_one_trace(step->trace);
-		i++;
-		step = step->next;
-	}
-}
-
-void display_one_trace(t_trace *trace)
-{
-	t_trace *tmp;
-	tmp = trace;
-	while (tmp)
-	{
-		ft_printf("%s->",tmp->room->name);
-		tmp = tmp->next;
-	}
-	ft_printf("\n");
-}
-
-void lem_final_display(t_lem *lem)
-{
-	int i;
-	int flag;
-	t_trace **trace;
+	int		i;
+	int		flag;
+	t_trace	**trace;
 
 	flag = 1;
 	trace = lem->trace;
+	ft_printf("%s\n\n", lem->file);
 	while (flag)
 	{
 		i = 0;
@@ -119,18 +80,10 @@ void lem_final_display(t_lem *lem)
 		while (i < lem->ant_num)
 		{
 			if (trace[i]->next)
-			{
-				if (trace[i]->room != trace[i]->next->room)
-				{
-					if (flag == 1)
-						ft_printf(" ");
-					ft_printf("L%d->%s", i + 1, trace[i]->next->room->name);
-					flag = 1;
-				}
-				trace[i]= trace[i]->next;
-			}
+				lem_display_room(trace, i, &flag);
 			i++;
 		}
-		ft_printf("\n");
+		if (flag)
+			ft_printf("\n");
 	}
 }
