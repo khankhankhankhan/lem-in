@@ -52,11 +52,10 @@ void	free_all_trace_set(t_trace_set *trace_set)
 	}
 }
 
-void free_room(t_lem *lem)
+void	free_room(t_lem *lem)
 {
-	t_room *room;
-	t_connect *con;
-
+	t_room		*room;
+	t_connect	*con;
 
 	while (lem->room)
 	{
@@ -73,7 +72,7 @@ void free_room(t_lem *lem)
 	}
 }
 
-void lem_free_all(t_lem *lem)
+void	lem_free_all(t_lem *lem)
 {
 	int i;
 

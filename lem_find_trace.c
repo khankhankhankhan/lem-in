@@ -70,9 +70,7 @@ void		get_trace(t_trace_set *trace_set, t_lem *lem)
 	t_trace		*tmp;
 	t_trace_set	*step;
 
-
 	lem->trace[lem->index] = new_trace(lem->start);
-//	while (1);
 	copy = lem->trace[lem->index];
 	step = lem->step;
 	if (lem->index > 0)
@@ -93,5 +91,4 @@ void		get_trace(t_trace_set *trace_set, t_lem *lem)
 	}
 	add_step(lem);
 	copy->next = new_trace(lem->end);
-
 }
