@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 **	creat a room
@@ -60,17 +60,20 @@ t_connect	*new_connect(t_room *room)
 **add the new connect node in the last of the room1's connect
 */
 
-void		lem_add_connection(t_room *room1, t_room *room2)
+int		lem_add_connection(t_room *room1, t_room *room2)
 {
 	t_connect	*new;
 
+	if (!room1 || !room2)
+		return (1);
 	new = new_connect(room2);
 	if (!room1->last_con)
 	{
 		room1->connect = new;
 		room1->last_con = new;
-		return ;
+		return (0);
 	}
 	room1->last_con->next = new;
 	room1->last_con = new;
+	return (0);
 }

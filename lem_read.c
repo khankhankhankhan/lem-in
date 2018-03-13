@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** count how many 'c' int the string 'src'
@@ -40,24 +40,17 @@ void	lem_get_room(char **line, t_lem *lem)
 {
 	char *temp;
 
+	temp = NULL;
 	while (!check_new_line(line, lem))
 	{
 		if (ft_strcmp("##start", *line) == 0 || ft_strcmp("##end", *line) == 0)
 		{
-			if (check_new_line(&temp, lem))
-				return ;
-			while (temp[0] == '#')
-			{
-				if (check_new_line(&temp, lem))
-					return ;
-			}
 			get_start_end_room(*line, temp, lem);
 			ft_strdel(&temp);
 		}
 		else if (ft_count_char(*line, ' ') == 2 && (*line)[0] != '#'
 				&& (*line)[0] != 'L')
 		{
-
 			lem->error = ft_room_check(*line, lem);
 			if (lem->error)
 				return ;
@@ -82,6 +75,7 @@ void	lem_get_link(char **line, t_lem *lem)
 		lem->error = 1;
 		return ;
 	}
+	ft_printf("line is :%s\n",*line);
 	lem->error = ft_connect_check(*line, lem);
 	ft_strdel(line);
 	while (!check_new_line(line, lem))
@@ -90,7 +84,7 @@ void	lem_get_link(char **line, t_lem *lem)
 			lem->error = ft_connect_check(*line, lem);
 		else if ((*line)[0] != '#')
 			lem->error = 1;
-		free (*line);
+		free(*line);
 	}
 }
 
@@ -100,6 +94,14 @@ void	lem_get_link(char **line, t_lem *lem)
 
 void	get_start_end_room(char *line, char *temp, t_lem *lem)
 {
+	if (check_new_line(&temp, lem))
+		return ;
+	while (temp[0] == '#')
+	{
+		ft_strdel(&temp);
+		if (check_new_line(&temp, lem))
+			return ;
+	}
 	lem->error = ft_room_check(temp, lem);
 	if (lem->error)
 		return ;
@@ -115,6 +117,7 @@ void	get_start_end_room(char *line, char *temp, t_lem *lem)
 	}
 	else
 		lem->error = 1;
+	ft_strdel(&temp);
 }
 
 /*
@@ -128,7 +131,7 @@ void	lem_read(t_lem *lem)
 	get_number(lem);
 	if (lem->error)
 		return ;
-	lem_trace_int(lem);
+	lem->trace = (t_trace**)malloc(sizeof(t_trace*) * lem->ant_num);
 	lem_get_room(&line, lem);
 	if (lem->error)
 		return ;

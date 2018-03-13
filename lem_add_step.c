@@ -6,11 +6,11 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/09 14:48:00 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/27 15:48:00 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/12 16:14:05 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** check this start and end room's connection is full,
@@ -26,7 +26,7 @@ int		check_step_full(t_trace_set *step, t_room *room)
 	connect = room->connect;
 	while (connect)
 	{
-		trace = step->trace;
+		trace = step->trace->next;
 		flag = 0;
 		while (trace)
 		{

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 t_lem		*lem_init(t_lem *lem)
 {
@@ -59,19 +59,6 @@ void		trace_set_init(t_lem *lem)
 	trace_set->last = trace_set->trace;
 	lem->trace_set = trace_set;
 	lem->set_last = trace_set;
-}
-
-void		lem_trace_int(t_lem *lem)
-{
-	/*int i;
-
-	i = 0;*/
-	lem->trace = (t_trace**)malloc(sizeof(t_trace*) * lem->ant_num);
-	/*while (i < lem->ant_num)
-	{
-		lem->trace[i] = new_trace(lem->start);
-		i++;
-	}*/
 }
 
 void		lem_step_init(t_lem *lem)

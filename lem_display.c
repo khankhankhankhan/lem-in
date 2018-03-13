@@ -6,11 +6,11 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 16:23:37 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 16:23:39 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/12 13:41:41 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** display the file format
@@ -72,7 +72,7 @@ void	lem_final_display(t_lem *lem)
 
 	flag = 1;
 	trace = lem->trace;
-	ft_printf("%s\n\n", lem->file);
+	ft_printf("%s\n", lem->file);
 	while (flag)
 	{
 		i = 0;

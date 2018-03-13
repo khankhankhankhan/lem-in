@@ -6,11 +6,11 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 10:27:12 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 10:27:14 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/12 17:11:19 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 int	main(int ac, char **av)
 {
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	lem = lem_init(lem);
 	lem_read(lem);
 	if (lem->error)
-		return (lem_display_format());
+		return (lem_display_error());
 	if (!lem->start || !lem->end)
 		return (lem_display_error());
 	lem_step_init(lem);

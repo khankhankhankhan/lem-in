@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** check if the room is legal
@@ -66,13 +66,11 @@ int		ft_connect_check(char *line, t_lem *lem)
 			room2 = room;
 		room = room->next;
 	}
-	if (!room1 || !room2)
-		return (0);
-	lem_add_connection(room1, room2);
-	lem_add_connection(room2, room1);
+	lem->error = lem_add_connection(room1, room2);
+	lem->error = lem_add_connection(room2, room1);
 	ft_free_doubulechar(src, 2);
 	free(src);
-	return (0);
+	return (lem->error);
 }
 
 /*
@@ -123,7 +121,6 @@ int		check_one_trace(t_lem *lem)
 	t_connect	*connect;
 
 	trace_set_init(lem);
-
 	t_set = lem->trace_set;
 	while (t_set)
 	{
@@ -144,6 +141,5 @@ int		check_one_trace(t_lem *lem)
 		t_set = t_set->next;
 	}
 	free_all_trace_set(lem->trace_set);
-	free(lem->trace_set);
 	return (0);
 }

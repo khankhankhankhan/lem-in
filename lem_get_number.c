@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** get how many ants in the box
@@ -25,6 +25,7 @@ void	get_number(t_lem *lem)
 		return ;
 	while (line[0] == '#')
 	{
+		free(line);
 		if (check_new_line(&line, lem))
 			return ;
 	}
@@ -73,6 +74,8 @@ void	check_all_digit(char *src, t_lem *lem)
 		}
 		i++;
 	}
+	if (i == 0)
+		lem->error = 1;
 }
 
 /*
