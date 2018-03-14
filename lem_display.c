@@ -57,7 +57,7 @@ void	lem_display_room(t_trace **trace, int i, int *flag)
 	{
 		if (*flag == 1)
 			ft_printf(" ");
-		ft_printf("L%d->%s", i + 1, temp->next->room->name);
+		ft_printf("L%d-%s", i + 1, temp->next->room->name);
 		*flag = 1;
 	}
 	trace[i] = trace[i]->next;

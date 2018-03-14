@@ -6,7 +6,7 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 10:23:23 by hkang             #+#    #+#             */
-/*   Updated: 2018/03/12 13:13:50 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/14 14:39:27 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct	s_connect
 typedef struct	s_room
 {
 	char			*name;
+	int				x;
+	int				y;
 	int				isstart;
 	int				isend;
 	t_connect		*connect;
@@ -62,13 +64,14 @@ typedef struct	s_lem
 	int			error;
 }				t_lem;
 
+int				lem_same_room(char **split, t_lem *lem);
 void			lem_add_room(char **split, t_lem *lem);
 t_connect		*new_connect(t_room *room);
-int			lem_add_connection(t_room *room1, t_room *room2);
+int				lem_add_connection(t_room *room1, t_room *room2);
+void			lem_delet_file_tail(t_lem *lem, char *line);
 
 void			add_step(t_lem *lem);
 void			append_step(t_trace *trace, t_room *room);
-
 void			add_one_trace(t_trace_set *trace_set,
 								t_trace_set *set_last, t_lem *lem);
 t_trace_set		*copy_trace(t_trace_set	*set_last,
@@ -115,4 +118,5 @@ void			ft_appendline(t_lem *lem, char *src);
 int				check_new_line(char **line, t_lem *lem);
 void			get_number(t_lem *lem);
 void			check_all_digit(char *src, t_lem *lem);
+
 #endif

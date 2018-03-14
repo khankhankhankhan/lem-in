@@ -6,7 +6,7 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 10:27:29 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/05 10:27:31 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/14 14:35:19 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,24 @@ void	lem_get_room(char **line, t_lem *lem)
 
 void	lem_get_link(char **line, t_lem *lem)
 {
+	int flag;
+
 	if (ft_count_char(*line, '-') != 1)
-	{
-		lem->error = 1;
 		return ;
-	}
-	ft_printf("line is :%s\n",*line);
-	lem->error = ft_connect_check(*line, lem);
+	if (ft_connect_check(*line, lem))
+		return ;
 	ft_strdel(line);
-	while (!check_new_line(line, lem))
+	flag = 0;
+	while (!flag && !check_new_line(line, lem))
 	{
 		if ((*line)[0] != '#' && ft_count_char(*line, '-') == 1)
-			lem->error = ft_connect_check(*line, lem);
+			flag = ft_connect_check(*line, lem);
 		else if ((*line)[0] != '#')
-			lem->error = 1;
-		free(*line);
+			flag = 1;
+		if (!flag)
+			free(*line);
+		else
+			lem_delet_file_tail(lem, *line);
 	}
 }
 
@@ -136,5 +139,6 @@ void	lem_read(t_lem *lem)
 	if (lem->error)
 		return ;
 	lem_get_link(&line, lem);
-	ft_strdel(&line);
+	if (!lem->error)
+		ft_strdel(&line);
 }

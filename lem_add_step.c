@@ -23,18 +23,17 @@ int		check_step_full(t_trace_set *step, t_room *room)
 	t_connect	*connect;
 	int			flag;
 
+	if (!step || !room)
+		return (0);
 	connect = room->connect;
 	while (connect)
 	{
 		trace = step->trace->next;
 		flag = 0;
-		while (trace)
+		while (trace && !flag)
 		{
 			if (trace->room == connect->room)
-			{
 				flag = 1;
-				trace = NULL;
-			}
 			else
 				trace = trace->next;
 		}
@@ -74,7 +73,7 @@ void	add_step(t_lem *lem)
 		trace = trace->next;
 	}
 	if (check_step_full(step, lem->end) ||
-			check_step_full(lem->step_start, lem->start))
+			check_step_full(lem->step_start->next, lem->start))
 		lem->step_start = lem->step_start->next;
 }
 

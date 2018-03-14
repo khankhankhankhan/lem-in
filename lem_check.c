@@ -6,7 +6,7 @@
 /*   By: hkang <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:49:16 by hkang             #+#    #+#             */
-/*   Updated: 2018/02/27 17:32:44 by hkang            ###   ########.fr       */
+/*   Updated: 2018/03/14 14:34:36 by hkang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_room_check(char *line, t_lem *lem)
 	}
 	lem_add_room(src, lem);
 	free(src);
-	return (0);
+	return (lem->error);
 }
 
 /*
@@ -51,6 +51,7 @@ int		ft_connect_check(char *line, t_lem *lem)
 	t_room	*room1;
 	t_room	*room2;
 	char	**src;
+	int		flag;
 
 	src = ft_strsplit(line, '-');
 	if (!src || !src[0] || !src[1])
@@ -66,11 +67,11 @@ int		ft_connect_check(char *line, t_lem *lem)
 			room2 = room;
 		room = room->next;
 	}
-	lem->error = lem_add_connection(room1, room2);
-	lem->error = lem_add_connection(room2, room1);
+	flag = lem_add_connection(room1, room2);
+	flag = lem_add_connection(room2, room1);
 	ft_free_doubulechar(src, 2);
 	free(src);
-	return (lem->error);
+	return (flag);
 }
 
 /*
